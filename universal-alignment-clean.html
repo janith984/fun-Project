@@ -1,0 +1,834 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Universal Alignment</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Jost:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #05040f;
+        --card: rgba(28, 20, 58, 0.55);
+        --card-solid: #1c1436;
+        --card2: rgba(20, 14, 44, 0.6);
+        --line: rgba(183, 156, 232, 0.22);
+        --lav: #b79ce8;
+        --gold: #f0ce84;
+        --rose: #e8b4ce;
+        --text: #efe9f7;
+        --muted: #9186ac;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        background:
+          radial-gradient(
+            1.5px 1.5px at 12% 22%,
+            rgba(255, 255, 255, 0.7),
+            transparent
+          ),
+          radial-gradient(
+            1px 1px at 62% 68%,
+            rgba(255, 255, 255, 0.5),
+            transparent
+          ),
+          radial-gradient(
+            1.3px 1.3px at 82% 38%,
+            rgba(255, 255, 255, 0.6),
+            transparent
+          ),
+          radial-gradient(
+            1px 1px at 32% 82%,
+            rgba(255, 255, 255, 0.4),
+            transparent
+          ),
+          radial-gradient(
+            1.4px 1.4px at 47% 12%,
+            rgba(255, 255, 255, 0.55),
+            transparent
+          ),
+          radial-gradient(
+            1px 1px at 92% 78%,
+            rgba(255, 255, 255, 0.4),
+            transparent
+          ),
+          radial-gradient(
+            1.2px 1.2px at 6% 60%,
+            rgba(255, 255, 255, 0.5),
+            transparent
+          ),
+          radial-gradient(
+            circle at 18% 8%,
+            rgba(120, 90, 200, 0.28) 0%,
+            transparent 42%
+          ),
+          radial-gradient(
+            circle at 88% 12%,
+            rgba(80, 70, 180, 0.22) 0%,
+            transparent 40%
+          ),
+          radial-gradient(
+            circle at 50% 34%,
+            rgba(240, 206, 132, 0.16) 0%,
+            transparent 55%
+          ),
+          radial-gradient(
+            circle at 50% 100%,
+            rgba(232, 180, 206, 0.1) 0%,
+            transparent 55%
+          ),
+          var(--bg);
+        background-repeat:
+          repeat, repeat, repeat, repeat, repeat, repeat, repeat, no-repeat,
+          no-repeat, no-repeat, no-repeat, no-repeat;
+        background-size:
+          220px 220px,
+          260px 260px,
+          300px 300px,
+          240px 240px,
+          280px 280px,
+          320px 320px,
+          250px 250px,
+          auto,
+          auto,
+          auto,
+          auto,
+          auto;
+        color: var(--text);
+        font-family: "Jost", sans-serif;
+        min-height: 100vh;
+        line-height: 1.6;
+        position: relative;
+        overflow-x: hidden;
+      }
+      h1,
+      h2,
+      h3,
+      .serif {
+        font-family: "Cormorant Garamond", serif;
+      }
+      .wrap {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 0 20px;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* floating hearts layer, inspired by classic love-calculator projects */
+      .hearts {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        overflow: hidden;
+      }
+      .hearts span {
+        position: absolute;
+        bottom: -40px;
+        font-size: 14px;
+        color: var(--rose);
+        opacity: 0.35;
+        animation: floatUp linear infinite;
+      }
+      @keyframes floatUp {
+        0% {
+          transform: translateY(0) translateX(0) rotate(0deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.4;
+        }
+        90% {
+          opacity: 0.25;
+        }
+        100% {
+          transform: translateY(-110vh) translateX(var(--drift, 20px))
+            rotate(25deg);
+          opacity: 0;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .hearts span {
+          animation: none;
+          display: none;
+        }
+      }
+
+      .aura {
+        position: absolute;
+        top: -10%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 640px;
+        height: 640px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(240, 206, 132, 0.2) 0%,
+          rgba(183, 156, 232, 0.1) 45%,
+          transparent 72%
+        );
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      header {
+        padding: 76px 0 46px;
+        text-align: center;
+        position: relative;
+      }
+      header .ring {
+        width: 120px;
+        height: 120px;
+        margin: 0 auto 26px;
+        border-radius: 50%;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 26px;
+        font-weight: 600;
+        color: var(--gold);
+        letter-spacing: 2px;
+        background: radial-gradient(
+          circle,
+          rgba(240, 206, 132, 0.22) 0%,
+          transparent 68%
+        );
+      }
+      header .ring::before,
+      header .ring::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        border: 1px solid rgba(240, 206, 132, 0.35);
+      }
+      header .ring::before {
+        inset: 0;
+      }
+      header .ring::after {
+        inset: -16px;
+        border-color: rgba(183, 156, 232, 0.22);
+      }
+      header .kicker {
+        color: var(--gold);
+        font-size: 12px;
+        letter-spacing: 3px;
+        margin-bottom: 6px;
+        text-transform: uppercase;
+        font-weight: 500;
+      }
+      header .kicker2 {
+        color: var(--muted);
+        font-size: 13px;
+        margin-bottom: 18px;
+      }
+      header h1 {
+        font-size: clamp(30px, 5.6vw, 50px);
+        font-weight: 500;
+        margin: 0 0 18px;
+        line-height: 1.2;
+        position: relative;
+        z-index: 1;
+        letter-spacing: 0.4px;
+      }
+      header h1 em {
+        font-style: italic;
+        color: var(--gold);
+      }
+      header p {
+        color: var(--muted);
+        max-width: 460px;
+        margin: 0 auto;
+        font-size: 16px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .horizon {
+        height: 2px;
+        max-width: 640px;
+        margin: 44px auto 0;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--gold),
+          transparent
+        );
+        box-shadow: 0 0 24px 2px rgba(240, 206, 132, 0.5);
+        position: relative;
+        z-index: 1;
+      }
+
+      .top-link {
+        position: fixed;
+        top: 18px;
+        right: 18px;
+        font-size: 12px;
+        color: var(--muted);
+        background: rgba(10, 6, 20, 0.4);
+        border: 1px solid var(--line);
+        padding: 7px 14px;
+        border-radius: 100px;
+        cursor: pointer;
+        text-decoration: none;
+        z-index: 10;
+        backdrop-filter: blur(6px);
+      }
+      .top-link:hover {
+        color: var(--text);
+        border-color: var(--lav);
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 22px;
+        margin-bottom: 22px;
+        position: relative;
+        z-index: 1;
+      }
+      @media (max-width: 640px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* glassmorphism panels, inspired by love-calculator's glass test page */
+      .panel {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 28px;
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+      }
+      .panel h2 {
+        font-size: 24px;
+        margin: 0 0 4px;
+        font-weight: 500;
+        color: var(--lav);
+      }
+      .panel .sub {
+        color: var(--muted);
+        font-size: 13px;
+        margin-bottom: 20px;
+        font-style: italic;
+      }
+
+      label {
+        display: block;
+        font-size: 13px;
+        color: var(--muted);
+        margin: 14px 0 6px;
+      }
+      label:first-of-type {
+        margin-top: 0;
+      }
+      input,
+      textarea {
+        width: 100%;
+        background: var(--card2);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 11px 13px;
+        color: var(--text);
+        font-family: inherit;
+        font-size: 15px;
+        outline: none;
+        transition: border-color 0.15s;
+      }
+      input:focus,
+      textarea:focus {
+        border-color: var(--lav);
+      }
+      textarea {
+        resize: vertical;
+        min-height: 64px;
+      }
+
+      .cta-row {
+        text-align: center;
+        margin: 34px 0 8px;
+        position: relative;
+        z-index: 1;
+      }
+      button.primary {
+        background: linear-gradient(135deg, var(--gold), var(--rose));
+        color: #1c1030;
+        border: none;
+        font-family: "Cormorant Garamond", serif;
+        font-weight: 600;
+        font-size: 19px;
+        padding: 15px 42px;
+        border-radius: 100px;
+        cursor: pointer;
+        box-shadow: 0 10px 28px rgba(232, 199, 126, 0.2);
+        letter-spacing: 0.3px;
+      }
+      button.primary:hover {
+        filter: brightness(1.05);
+      }
+      .error {
+        color: var(--rose);
+        text-align: center;
+        font-size: 14px;
+        min-height: 20px;
+        margin-top: 6px;
+      }
+
+      /* how it works, inspired by love-calculator's how-it-works page */
+      .howit {
+        max-width: 640px;
+        margin: 36px auto 0;
+        position: relative;
+        z-index: 1;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        overflow: hidden;
+      }
+      .howit summary {
+        cursor: pointer;
+        padding: 16px 20px;
+        color: var(--gold);
+        font-size: 14px;
+        letter-spacing: 0.5px;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .howit summary::-webkit-details-marker {
+        display: none;
+      }
+      .howit summary::after {
+        content: "+";
+        font-size: 18px;
+        color: var(--muted);
+      }
+      .howit[open] summary::after {
+        content: "–";
+      }
+      .howit .body {
+        padding: 0 20px 20px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .howit .body p {
+        margin: 8px 0;
+      }
+
+      /* Result */
+      #result {
+        display: none;
+        margin-top: 14px;
+        position: relative;
+        z-index: 1;
+      }
+      .result-card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        padding: 44px 30px;
+        text-align: center;
+        animation: reveal 0.6s cubic-bezier(0.2, 0.9, 0.3, 1);
+        position: relative;
+        overflow: hidden;
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+      }
+      .result-card::before {
+        content: "";
+        position: absolute;
+        top: -40%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 340px;
+        height: 340px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(201, 167, 245, 0.22) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+      @keyframes reveal {
+        from {
+          opacity: 0;
+          transform: scale(0.95) translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+      }
+      .score {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(56px, 12vw, 90px);
+        font-weight: 600;
+        background: linear-gradient(135deg, var(--gold), var(--lav));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        line-height: 1;
+        margin-bottom: 8px;
+        position: relative;
+      }
+      .score-label {
+        color: var(--gold);
+        font-size: 12px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        margin-bottom: 22px;
+        position: relative;
+      }
+      .names {
+        color: var(--muted);
+        font-size: 15px;
+        margin-bottom: 20px;
+        font-style: italic;
+        position: relative;
+      }
+      .verdict {
+        font-size: 18px;
+        max-width: 520px;
+        margin: 0 auto 22px;
+        position: relative;
+      }
+      .again {
+        background: none;
+        border: 1px solid var(--line);
+        color: var(--muted);
+        padding: 10px 22px;
+        border-radius: 100px;
+        font-family: inherit;
+        font-size: 14px;
+        cursor: pointer;
+        position: relative;
+        margin: 4px;
+      }
+      .again:hover {
+        color: var(--text);
+        border-color: var(--lav);
+      }
+
+      footer {
+        text-align: center;
+        color: var(--muted);
+        font-size: 12px;
+        padding: 56px 0 32px;
+        letter-spacing: 0.2px;
+        position: relative;
+        z-index: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="hearts" id="heartsLayer"></div>
+
+    <div class="wrap">
+      <header>
+        <div class="aura"></div>
+        <div class="ring">11:11</div>
+        <div class="kicker">A Divine Reminder</div>
+        <div class="kicker2">
+          You are connected. You are guided. Two energies, meeting.
+        </div>
+        <h1>Are Your <em>Energies</em> Aligned?</h1>
+        <p>
+          Share a little about you, and a little about the one who holds your
+          attention — the universe will reveal how your energies move together.
+        </p>
+        <div class="horizon"></div>
+      </header>
+
+      <div id="quizForm">
+        <div class="grid">
+          <div class="panel">
+            <h2>You</h2>
+            <div class="sub">Your essence</div>
+            <label>Name</label>
+            <input id="u_name" placeholder="e.g. Sanduni" />
+            <label>Age</label>
+            <input
+              id="u_age"
+              type="number"
+              min="10"
+              max="100"
+              placeholder="21"
+            />
+            <label>Passions & interests (comma separated)</label>
+            <textarea
+              id="u_interests"
+              placeholder="music, nature, art..."
+            ></textarea>
+            <label>2–3 words that hold your energy</label>
+            <input id="u_traits" placeholder="warm, curious, grounded..." />
+          </div>
+
+          <div class="panel">
+            <h2>Them</h2>
+            <div class="sub">Their essence</div>
+            <label>Name</label>
+            <input id="c_name" placeholder="e.g. Kavindu" />
+            <label>Age</label>
+            <input
+              id="c_age"
+              type="number"
+              min="10"
+              max="100"
+              placeholder="22"
+            />
+            <label>Passions & interests (comma separated)</label>
+            <textarea
+              id="c_interests"
+              placeholder="music, movement, stillness..."
+            ></textarea>
+            <label>2–3 words that hold their energy</label>
+            <input id="c_traits" placeholder="calm, bright, magnetic..." />
+          </div>
+        </div>
+
+        <div class="cta-row">
+          <button class="primary" type="button" id="submitBtn">
+            Reveal Our Alignment
+          </button>
+          <div class="error" id="formError"></div>
+        </div>
+      </div>
+
+      <div id="result">
+        <div class="result-card">
+          <div class="score" id="scoreNum">0%</div>
+          <div class="score-label">ENERGY ALIGNMENT</div>
+          <div class="names" id="namesLine"></div>
+          <div class="verdict" id="verdictText"></div>
+          <div>
+            <button class="again" id="againBtn">Reflect Again</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const ADMIN_EMAIL = "youradmin@example.com"; // change this to your real address
+
+      const GOOGLE_FORM_ACTION =
+        "https://docs.google.com/forms/d/e/1FAIpQLSdGbeW9tiJWWvOESJAEo-VxM2hNSlNVRIjBOskrbAUdEUhTVg/formResponse";
+
+      const GOOGLE_FORM_FIELDS = {
+        userName: "entry.602240777",
+        userAge: "entry.644915175",
+        userInterests: "entry.1714681514",
+        userTraits: "entry.1635017036",
+        crushName: "entry.164197612",
+        crushAge: "entry.1644889324",
+        crushInterests: "entry.829938060",
+        crushTraits: "entry.1969009818",
+      };
+
+      function sendToGoogleForm(u, c) {
+        // A hidden HTML form + iframe avoids CORS problems and works from a normal webpage.
+        const iframe = document.createElement("iframe");
+        iframe.name = "googleFormTarget";
+        iframe.style.display = "none";
+        document.body.appendChild(iframe);
+
+        const googleForm = document.createElement("form");
+        googleForm.method = "POST";
+        googleForm.action = GOOGLE_FORM_ACTION;
+        googleForm.target = "googleFormTarget";
+        googleForm.style.display = "none";
+
+        const values = {
+          [GOOGLE_FORM_FIELDS.userName]: u.name,
+          [GOOGLE_FORM_FIELDS.userAge]: u.age,
+          [GOOGLE_FORM_FIELDS.userInterests]: u.interests,
+          [GOOGLE_FORM_FIELDS.userTraits]: u.traits,
+          [GOOGLE_FORM_FIELDS.crushName]: c.name,
+          [GOOGLE_FORM_FIELDS.crushAge]: c.age,
+          [GOOGLE_FORM_FIELDS.crushInterests]: c.interests,
+          [GOOGLE_FORM_FIELDS.crushTraits]: c.traits,
+        };
+
+        Object.entries(values).forEach(([name, value]) => {
+          const input = document.createElement("input");
+          input.type = "hidden";
+          input.name = name;
+          input.value = value;
+          googleForm.appendChild(input);
+        });
+
+        document.body.appendChild(googleForm);
+        googleForm.submit();
+
+        // Clean up the temporary elements after submission has started.
+        setTimeout(() => {
+          googleForm.remove();
+          iframe.remove();
+        }, 5000);
+      }
+
+      function hashStr(str) {
+        let h = 0;
+        for (let i = 0; i < str.length; i++) {
+          h = (h * 31 + str.charCodeAt(i)) >>> 0;
+        }
+        return h;
+      }
+
+      function splitList(s) {
+        return s
+          .split(",")
+          .map((x) => x.trim().toLowerCase())
+          .filter(Boolean);
+      }
+
+      let lastRecord = null;
+
+      function computeMatch(u, c) {
+        const uInterests = splitList(u.interests);
+        const cInterests = splitList(c.interests);
+        const shared = uInterests.filter((i) => cInterests.includes(i));
+
+        const seed = hashStr(u.name.toLowerCase() + c.name.toLowerCase());
+        let base = 40 + (seed % 41);
+        base += shared.length * 6;
+        base -= Math.abs(parseInt(u.age) - parseInt(c.age)) * 0.4;
+        let score = Math.round(Math.max(9, Math.min(99, base)));
+
+        let bracket;
+        if (score >= 85) bracket = "high";
+        else if (score >= 65) bracket = "good";
+        else if (score >= 40) bracket = "mid";
+        else bracket = "low";
+
+        const templates = {
+          high: [
+            `${u.name} and ${c.name} — this is a rare current. ${shared.length ? "You both carry a shared thread of " + shared[0] + ", a natural place to begin." : "Even without overlapping passions, your energies move in the same direction."} Trust it enough to speak.`,
+            `A rare alignment. ${u.name}'s ${u.traits.split(",")[0].trim()} nature and ${c.name}'s ${c.traits.split(",")[0].trim()} nature meet with unusual ease.`,
+          ],
+          good: [
+            `${u.name} and ${c.name} share a gentle, steady chemistry. ${shared.length ? "Let " + shared[0] + " be your common ground — it can open the door." : "Look for one shared interest to anchor a conversation; it will carry the connection further."}`,
+          ],
+          mid: [
+            `${u.name} and ${c.name} — possible, but it will ask for patience. Your energies differ a little, yet ${shared.length ? "a shared thread of " + shared[0] + " " : "an open heart "} can still bridge the distance.`,
+          ],
+          low: [
+            `The numbers don't point the same way, but that's never the whole story. Real alignment reveals itself in how two people actually speak to one another. Let it unfold before you decide.`,
+          ],
+        };
+        const list = templates[bracket];
+        const text = list[seed % list.length];
+        return { score, text, shared };
+      }
+
+      const form = document.getElementById("quizForm");
+      const resultBox = document.getElementById("result");
+      const formError = document.getElementById("formError");
+
+      document.getElementById("submitBtn").addEventListener("click", () => {
+        formError.textContent = "";
+
+        const u = {
+          name: document.getElementById("u_name").value.trim(),
+          age: document.getElementById("u_age").value.trim(),
+          interests: document.getElementById("u_interests").value.trim(),
+          traits: document.getElementById("u_traits").value.trim(),
+        };
+        const c = {
+          name: document.getElementById("c_name").value.trim(),
+          age: document.getElementById("c_age").value.trim(),
+          interests: document.getElementById("c_interests").value.trim(),
+          traits: document.getElementById("c_traits").value.trim(),
+        };
+
+        if (
+          !u.name ||
+          !c.name ||
+          !u.age ||
+          !c.age ||
+          !u.interests ||
+          !c.interests ||
+          !u.traits ||
+          !c.traits
+        ) {
+          formError.textContent = "Please fill in every field.";
+          return;
+        }
+
+        const { score, text } = computeMatch(u, c);
+
+        document.getElementById("scoreNum").textContent = score + "%";
+        document.getElementById("namesLine").textContent =
+          u.name + " × " + c.name;
+        document.getElementById("verdictText").textContent = text;
+        resultBox.style.display = "block";
+        form.style.display = "none";
+        resultBox.scrollIntoView({ behavior: "smooth", block: "start" });
+
+        lastRecord = {
+          user: u,
+          crush: c,
+          score,
+          text,
+          ts: new Date().toISOString(),
+        };
+
+        // Save the 8 answers to Google Forms.
+        sendToGoogleForm(u, c);
+      });
+
+      document.getElementById("againBtn").addEventListener("click", () => {
+        [
+          "u_name",
+          "u_age",
+          "u_interests",
+          "u_traits",
+          "c_name",
+          "c_age",
+          "c_interests",
+          "c_traits",
+        ].forEach((id) => {
+          document.getElementById(id).value = "";
+        });
+        form.style.display = "block";
+        resultBox.style.display = "none";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      // floating hearts background, inspired by classic love-calculator heart motifs
+      (function () {
+        const layer = document.getElementById("heartsLayer");
+        const glyphs = ["♥", "✦", "♥"];
+        for (let i = 0; i < 16; i++) {
+          const s = document.createElement("span");
+          s.textContent = glyphs[i % glyphs.length];
+          s.style.left = Math.random() * 100 + "vw";
+          s.style.setProperty("--drift", Math.random() * 60 - 30 + "px");
+          s.style.fontSize = 10 + Math.random() * 14 + "px";
+          s.style.animationDuration = 14 + Math.random() * 14 + "s";
+          s.style.animationDelay = Math.random() * 14 + "s";
+          layer.appendChild(s);
+        }
+      })();
+    </script>
+  </body>
+</html>
